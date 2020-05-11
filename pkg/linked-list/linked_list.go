@@ -2,7 +2,6 @@ package linkedlist
 
 import (
 	"errors"
-	"fmt"
 )
 
 var ErrEmptyList = errors.New("Empty list")
@@ -11,10 +10,6 @@ type Node struct {
 	Val  interface{}
 	prev *Node
 	next *Node
-}
-
-func (n *Node) String() string {
-	return fmt.Sprintf("{Value:%d, Prev:%s, Next:%s}", n.Val, n.prev, n.next)
 }
 
 type List struct {
@@ -111,16 +106,10 @@ func (l *List) Reverse() *List {
 
 // First return the head of the doubly linked list
 func (l *List) First() *Node {
-	if l == nil {
-		return nil
-	}
 	return l.head
 }
 
 // Last returns the tail of the list
 func (l *List) Last() *Node {
-	if l == nil {
-		return nil
-	}
 	return l.tail
 }
