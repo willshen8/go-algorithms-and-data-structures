@@ -35,6 +35,7 @@ func (tree *BST) Insert(key int, value int) {
 	}
 }
 
+// InsertNode will insert a node starting from the root
 func InsertNode(root *Node, node *Node) {
 	if node.key < root.key {
 		if root.leftNode == nil {
@@ -51,4 +52,41 @@ func InsertNode(root *Node, node *Node) {
 	} else { //case when key equals to root key
 		root.value = node.value
 	}
+}
+
+// Search will look for a particular key in the tree and return a boolean
+func (tree *BST) SearchNode(key int) bool {
+	tree.lock.RLock()
+	defer tree.lock.RUnlock()
+	return searchNode(tree.root, key)
+}
+
+func searchNode(root *Node, key int) bool {
+	if root == nil {
+		return false
+	} else if key < root.key {
+		return searchNode(root.leftNode, key)
+	} else if key > root.key {
+		return searchNode(root.rightNode, key)
+	}
+	return true
+}
+
+// RemoveNode removes a node with a key from the BST
+func (tree *BST) DeleteNode(key int) *Node {
+	tree.lock.Lock()
+	defer tree.lock.Unlock()
+	return deleteNode(tree.root, key)
+}
+
+func deleteNode(root *Node, key int) *Node {
+	if root == nil {
+		return nil
+	} else if root.key < key {
+		return deleteNode(root.leftNode, key)
+	} else if root.key > key {
+		return deleteNode(root.rightNode, key)
+	}
+	// when key == root.
+	return nil
 }
