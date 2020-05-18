@@ -53,7 +53,7 @@ Start from the root, and check current node and go to left or right tree depend 
 
 ```
 
-3. Node to be deleted has 2 children - Find in order successor and replace it with the node to be deleted
+3. Node to be deleted has 2 children - We ned to find the smallest node from the right tree (the most left leaf node). In this case, it is node with key 60.
 
 
 ```
@@ -64,3 +64,15 @@ Start from the root, and check current node and go to left or right tree depend 
                 60   80                           80
 
 ```
+
+### Time and space Complexity
+
+| Operation     | Big O       | 
+| ------------- |-------------| 
+| Insert        | O(logN)     | 
+| Search        | O(logN)     | 
+| Delete        | O(logN)     |
+
+Why it is O(logN)? The number of elements is N, and it has a power of 2 (as it is binary: left or right). Let's say we have 8 nodes, if we eliminate half of the nodes by going into a subtree, we have 4 nodes. If we keep going we are left with 2 nodes and again we finally reached the desired node. Thus O(log8) = O(3), which is the worst case. 
+
+It is the same case regardless whether it's insert, search or delete option.
