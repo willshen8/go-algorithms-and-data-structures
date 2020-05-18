@@ -101,8 +101,7 @@ func deleteNode(root *Node, key int) *Node {
 		return root
 	}
 	// Find the left most right node for the replacement
-	var leftMostRightNode *Node
-	leftMostRightNode = root.rightNode
+	leftMostRightNode := root.rightNode
 	for {
 		//find smallest value on the right side
 		if leftMostRightNode != nil && leftMostRightNode.leftNode != nil {
