@@ -188,3 +188,16 @@ func TestDeleteNodeWithTwoChildren(t *testing.T) {
 		t.Fatalf("Test case failed: Delete a node with 2 children, expected: root(0) -> right(2)")
 	}
 }
+
+func TestDeleteRootWithMultipleChildren(t *testing.T) {
+	tree := &BST{}
+	tree.Insert(1, "B")
+	tree.Insert(0, "A")
+	tree.Insert(3, "C")
+	tree.Insert(2, "D")
+	tree.DeleteNode(1)
+	expectedTree := &Node{key: 2, value: "D", leftNode: &Node{key: 0, value: "A"}, rightNode: &Node{key: 3, value: "C"}}
+	if !reflect.DeepEqual(tree.root, expectedTree) {
+		t.Fatalf("Test case failed: Delete a node with 2 children, expected: root(0) -> right(2)")
+	}
+}
