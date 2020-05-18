@@ -1,29 +1,25 @@
 package bst
 
 import (
-	"fmt"
 	"sync"
 )
 
 // Node in a binary search tree contains a key and value and reference to left and right child
 type Node struct {
 	key       int
-	value     int
+	value     interface{}
 	leftNode  *Node
 	rightNode *Node
 }
 
+// BST contains a link to its root and a mutex to synchronise write and read operations
 type BST struct {
 	root *Node
 	lock sync.RWMutex
 }
 
-func (n Node) String() string {
-	return fmt.Sprintf("Key: %d, Value: %d, LeftNode: %s, RightNode: %s", n.key, n.value, n.leftNode, n.rightNode)
-}
-
 // Insert will add new value into the tree
-func (tree *BST) Insert(key int, value int) {
+func (tree *BST) Insert(key int, value interface{}) {
 	tree.lock.Lock()
 	defer tree.lock.Unlock()
 	newNode := &Node{key, value, nil, nil}
@@ -54,25 +50,25 @@ func InsertNode(root *Node, node *Node) {
 	}
 }
 
-// Search will look for a particular key in the tree and return a boolean
-func (tree *BST) SearchNode(key int) bool {
+// SearchNode will look for a particular key in the tree and return a boolean
+func (tree *BST) SearchNode(key int) interface{} {
 	tree.lock.RLock()
 	defer tree.lock.RUnlock()
 	return searchNode(tree.root, key)
 }
 
-func searchNode(root *Node, key int) bool {
+func searchNode(root *Node, key int) interface{} {
 	if root == nil {
-		return false
+		return nil
 	} else if key < root.key {
 		return searchNode(root.leftNode, key)
 	} else if key > root.key {
 		return searchNode(root.rightNode, key)
 	}
-	return true
+	return root.value
 }
 
-// RemoveNode removes a node with a key from the BST
+// DeleteNode removes a node from the BST and returns the updated tree
 func (tree *BST) DeleteNode(key int) *Node {
 	tree.lock.Lock()
 	defer tree.lock.Unlock()
@@ -82,11 +78,40 @@ func (tree *BST) DeleteNode(key int) *Node {
 func deleteNode(root *Node, key int) *Node {
 	if root == nil {
 		return nil
-	} else if root.key < key {
-		return deleteNode(root.leftNode, key)
-	} else if root.key > key {
-		return deleteNode(root.rightNode, key)
 	}
-	// when key == root.
-	return nil
+	if key < root.key {
+		root.leftNode = deleteNode(root.leftNode, key)
+		return root
+	}
+	if key > root.key {
+		root.rightNode = deleteNode(root.rightNode, key)
+		return root
+	}
+	// key == root.key
+	if root.leftNode == nil && root.rightNode == nil {
+		root = nil
+		return root
+	}
+	if root.leftNode == nil { // make right tree the new tree
+		root = root.rightNode
+		return root
+	}
+	if root.rightNode == nil { // make left tree the new tree
+		root = root.leftNode
+		return root
+	}
+	// Find the left most right node for the replacement
+	var leftMostRightNode *Node
+	leftMostRightNode = root.rightNode
+	for {
+		//find smallest value on the right side
+		if leftMostRightNode != nil && leftMostRightNode.leftNode != nil {
+			leftMostRightNode = leftMostRightNode.leftNode
+		} else {
+			break
+		}
+	}
+	root.key, root.value = leftMostRightNode.key, leftMostRightNode.value
+	root.rightNode = deleteNode(root.rightNode, root.key)
+	return root
 }
