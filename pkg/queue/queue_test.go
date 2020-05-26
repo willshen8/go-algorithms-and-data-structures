@@ -6,9 +6,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// Action calls a function of the queue
-type Action func(*testing.T, *Queue)
-
 func TestNewQueue(t *testing.T) {
 	for _, tc := range newQueueTestCases {
 		t.Run(tc.name, func(t *testing.T) {

@@ -2,6 +2,9 @@ package queue
 
 import "testing"
 
+// Action calls a function of the queue
+type Action func(*testing.T, *Queue)
+
 var newQueueTestCases = []struct {
 	name     string
 	input    []interface{}
