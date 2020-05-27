@@ -89,6 +89,6 @@ var dequeueTestCases = []struct {
 			enqueue(2),
 			dequeue(),
 		},
-		expected: []interface{}{1},
+		expected: []interface{}{2},
 	},
 }

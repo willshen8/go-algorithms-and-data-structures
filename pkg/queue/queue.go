@@ -20,5 +20,5 @@ func (q *Queue) Enqueue(input interface{}) {
 func (q *Queue) Dequeue() {
 	q.lock.Lock()
 	defer q.lock.Unlock()
-	q.items = q.items[:len(q.items)-1]
+	q.items = q.items[1:len(q.items)]
 }
