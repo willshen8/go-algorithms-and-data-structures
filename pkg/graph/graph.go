@@ -39,3 +39,30 @@ func (g *Graph) AddEdge(a *Vertex, b *Vertex) {
 	defer g.lock.Unlock()
 	g.edges[*a] = append(g.edges[*a], b)
 }
+
+func (g *Graph) RemoveVertex(v *Vertex) {
+	g.lock.Lock()
+	defer g.lock.Unlock()
+	delete(g.edges, *v) // remove it's edges
+	for index, vertex := range g.vertices {
+		if vertex == v {
+			g.vertices[index] = g.vertices[len(g.vertices)-1] // move the last element to i
+			g.vertices = g.vertices[:len(g.vertices)-1]       // truncate the slice to remove v
+		}
+	}
+}
+
+func (g *Graph) RemoveEdge(a *Vertex, b *Vertex) bool {
+	g.lock.Lock()
+	defer g.lock.Unlock()
+	if len(g.edges[*a]) == 0 {
+		return false
+	}
+	for index, vertex := range g.edges[*a] {
+		if vertex == b {
+			g.edges[*a][index] = g.edges[*a][len(g.edges)-1]
+			g.edges[*a] = g.edges[*a][:len(g.edges)-1]
+		}
+	}
+	return true
+}

@@ -32,3 +32,40 @@ func TestAddEdge(t *testing.T) {
 	actual := graph.edges[Vertex{value: "A"}][0]
 	assert.Equal(t, expectedVertexFromA, actual)
 }
+
+func TestRemoveVertex(t *testing.T) {
+	graph := NewGraph()
+	graph.AddVertex("A")
+	graph.AddVertex("B")
+	vertexA, vertexB := graph.vertices[0], graph.vertices[1]
+	graph.AddEdge(vertexA, vertexB)
+	graph.RemoveVertex(vertexA)
+	assert.Equal(t, 1, len(graph.vertices))
+	assert.Equal(t, 0, len(graph.edges))
+}
+
+func TestRemoveEdge(t *testing.T) {
+	graph := NewGraph()
+	graph.AddVertex("A")
+	graph.AddVertex("B")
+	vertexA, vertexB := graph.vertices[0], graph.vertices[1]
+	graph.AddEdge(vertexA, vertexB)
+	expected := true
+	actual := graph.RemoveEdge(vertexA, vertexB)
+	assert.Equal(t, expected, actual)
+	assert.Equal(t, 2, len(graph.vertices))
+	assert.Equal(t, 0, len(graph.edges[*vertexA]), "Vertex A's remaining edge are: %v", graph.edges[*vertexA])
+}
+
+func TestRemoveNonExistentEdge(t *testing.T) {
+	graph := NewGraph()
+	graph.AddVertex("A")
+	graph.AddVertex("B")
+	vertexA, vertexB := graph.vertices[0], graph.vertices[1]
+	graph.AddEdge(vertexA, vertexB)
+	expected := false
+	actual := graph.RemoveEdge(vertexB, vertexA) // no directed edge from b to a
+	assert.Equal(t, expected, actual)
+	assert.Equal(t, 2, len(graph.vertices))
+	assert.Equal(t, 1, len(graph.edges[*vertexA]))
+}
