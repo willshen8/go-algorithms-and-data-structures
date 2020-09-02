@@ -1,8 +1,6 @@
 package graph
 
 import (
-	"fmt"
-
 	"github.com/willshen8/go-algorithms-and-data-structures/pkg/queue"
 )
 
@@ -16,7 +14,6 @@ func (g *Graph) BFS(start Vertex) []Vertex {
 	for q.Length() > 0 {
 		qVertex := q.Dequeue()
 		for _, vertex := range g.edges[qVertex.(Vertex)] {
-			fmt.Println("vertex:", vertex)
 			var exist bool
 			for _, v := range visited {
 				if v == *vertex {
@@ -24,7 +21,6 @@ func (g *Graph) BFS(start Vertex) []Vertex {
 				}
 			}
 			if !exist {
-				fmt.Println("Doesn't exist")
 				visited = append(visited, *vertex)
 				q.Enqueue(*vertex)
 			}
