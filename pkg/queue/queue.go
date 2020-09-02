@@ -19,10 +19,12 @@ func (q *Queue) Enqueue(input interface{}) {
 }
 
 // Dequeue take one item off the queue
-func (q *Queue) Dequeue() {
+func (q *Queue) Dequeue() interface{} {
 	q.lock.Lock()
 	defer q.lock.Unlock()
+	dequeuedItem := q.items[0]
 	q.items = q.items[1:len(q.items)]
+	return dequeuedItem
 }
 
 // Length gives the length of the queue

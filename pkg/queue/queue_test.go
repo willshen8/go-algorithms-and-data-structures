@@ -30,11 +30,13 @@ func TestEnqueue(t *testing.T) {
 func TestDeQueue(t *testing.T) {
 	for _, tc := range dequeueTestCases {
 		t.Run(tc.name, func(t *testing.T) {
-			actual := NewQueue()
+			actualQueue := NewQueue()
 			for _, action := range tc.actions {
-				action(t, actual)
+				action(t, actualQueue)
 			}
-			assert.Equal(t, tc.expected, actual.items)
+			actualDequeuedItem := actualQueue.Dequeue()
+			assert.Equal(t, tc.expectedQueue, actualQueue.items)
+			assert.Equal(t, tc.dequeuedItem, actualDequeuedItem)
 		})
 	}
 }

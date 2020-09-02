@@ -52,33 +52,28 @@ var enqueueTestCases = []struct {
 	},
 }
 
-func dequeue() Action {
-	return func(t *testing.T, q *Queue) {
-		q.Dequeue()
-	}
-}
-
 var dequeueTestCases = []struct {
-	name     string
-	actions  []Action
-	expected []interface{}
+	name          string
+	actions       []Action
+	dequeuedItem  interface{}
+	expectedQueue []interface{}
 }{
 	{
 		name: "remove a single item from queue",
 		actions: []Action{
 			enqueue(1),
-			dequeue(),
 		},
-		expected: []interface{}{},
+		dequeuedItem:  1,
+		expectedQueue: []interface{}{},
 	},
 	{
 		name: "adding multiple items into the queue",
 		actions: []Action{
 			enqueue(1),
 			enqueue(2),
-			dequeue(),
 		},
-		expected: []interface{}{2},
+		dequeuedItem:  1,
+		expectedQueue: []interface{}{2},
 	},
 }
 
