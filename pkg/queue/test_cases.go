@@ -7,28 +7,11 @@ type Action func(*testing.T, *Queue)
 
 var newQueueTestCases = []struct {
 	name     string
-	input    []interface{}
 	expected []interface{}
 }{
 	{
 		name:     "queue with no data",
-		input:    []interface{}{},
-		expected: []interface{}{},
-	},
-	{
-		name:     "queue with one item",
-		input:    []interface{}{1},
-		expected: []interface{}{1},
-	},
-	{
-		name:     "queue with multiple items",
-		input:    []interface{}{1, 2, 3, 4, 5},
-		expected: []interface{}{1, 2, 3, 4, 5},
-	},
-	{
-		name:     "queue with mixed items",
-		input:    []interface{}{1, "two", 3, "four", 5},
-		expected: []interface{}{1, "two", 3, "four", 5},
+		expected: []interface{}(nil),
 	},
 }
 

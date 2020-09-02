@@ -7,8 +7,8 @@ type Queue struct {
 	lock  sync.RWMutex
 }
 
-func NewQueue(input []interface{}) *Queue {
-	return &Queue{items: input}
+func NewQueue() *Queue {
+	return &Queue{}
 }
 
 func (q *Queue) Enqueue(input interface{}) {

@@ -9,7 +9,7 @@ import (
 func TestNewQueue(t *testing.T) {
 	for _, tc := range newQueueTestCases {
 		t.Run(tc.name, func(t *testing.T) {
-			actual := NewQueue(tc.input)
+			actual := NewQueue()
 			assert.Equal(t, tc.expected, actual.items)
 		})
 	}
@@ -18,7 +18,7 @@ func TestNewQueue(t *testing.T) {
 func TestEnqueue(t *testing.T) {
 	for _, tc := range enqueueTestCases {
 		t.Run(tc.name, func(t *testing.T) {
-			actual := NewQueue([]interface{}{})
+			actual := NewQueue()
 			for _, action := range tc.actions {
 				action(t, actual)
 			}
@@ -30,7 +30,7 @@ func TestEnqueue(t *testing.T) {
 func TestDeQueue(t *testing.T) {
 	for _, tc := range dequeueTestCases {
 		t.Run(tc.name, func(t *testing.T) {
-			actual := NewQueue([]interface{}{})
+			actual := NewQueue()
 			for _, action := range tc.actions {
 				action(t, actual)
 			}
