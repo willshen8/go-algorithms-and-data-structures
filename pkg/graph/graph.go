@@ -21,9 +21,7 @@ type Graph struct {
 
 // NewGraph is a constructor that initializes a new graph
 func NewGraph() *Graph {
-	newGraph := &Graph{}
-	newGraph.edges = make(map[Vertex][]*Vertex)
-	return newGraph
+	return &Graph{edges: make(map[Vertex][]*Vertex)}
 }
 
 // AddVertex will add a new vertex
