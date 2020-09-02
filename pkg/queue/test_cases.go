@@ -21,6 +21,12 @@ func enqueue(arg interface{}) Action {
 	}
 }
 
+func length() Action {
+	return func(t *testing.T, q *Queue) {
+		q.Length()
+	}
+}
+
 var enqueueTestCases = []struct {
 	name     string
 	actions  []Action
@@ -73,5 +79,29 @@ var dequeueTestCases = []struct {
 			dequeue(),
 		},
 		expected: []interface{}{2},
+	},
+}
+
+var lengthTestCases = []struct {
+	name     string
+	actions  []Action
+	expected int
+}{
+	{
+		name: "empty queue length",
+		actions: []Action{
+			length(),
+		},
+		expected: 0,
+	},
+	{
+		name: "queue with length of 3",
+		actions: []Action{
+			enqueue(1),
+			enqueue(2),
+			enqueue(3),
+			length(),
+		},
+		expected: 3,
 	},
 }
