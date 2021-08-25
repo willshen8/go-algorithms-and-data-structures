@@ -2,6 +2,7 @@ package queue
 
 import "sync"
 
+// Queue is a structure that contains a slice of any type and a mutex
 type Queue struct {
 	items []interface{}
 	lock  sync.RWMutex
