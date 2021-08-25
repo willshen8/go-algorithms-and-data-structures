@@ -6,7 +6,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// dummy comment to test commit hooks
 func TestNewQueue(t *testing.T) {
 	for _, tc := range newQueueTestCases {
 		t.Run(tc.name, func(t *testing.T) {
